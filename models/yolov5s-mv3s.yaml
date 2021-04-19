@@ -1,8 +1,7 @@
-
 # parameters
 nc: 2  # number of classes
-depth_multiple: 1.0  # model depth multiple
-width_multiple: 1.0  # layer channel multiple
+depth_multiple: 1.0  # dont change this otherwise InvertedResidual will be affected
+width_multiple: 1.0  # dont change this otherwise InvertedResidual will be affected
 
 # anchors
 anchors:
@@ -29,9 +28,9 @@ backbone:
   ]
         
 # YOLOv5 head
-# head仍为yolov5s，但depth_multiple和width_multiple写死为1.0，所以下面输出形状要手动调整为yolov5s大小
-# depth_multiple: 0.33 对应C3的深度变1/3
-# width_multiple: 0.50 对应输出通道变1/2
+# the head is still yolov5s, but depth_multiple and width_multiple are set to 1.0, so Conv and C3 need to be changed
+# depth_multiple of yolov5s: 0.33, i.e., number of C3: 3 -> 1
+# width_multiple of yolov5s: 0.50, i.e., halve the ch_out
 head:
   [[-1, 1, Conv, [256, 1, 1]],
    [-1, 1, nn.Upsample, [None, 2, 'nearest']],
